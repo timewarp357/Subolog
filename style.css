@@ -30,11 +30,25 @@ main {
   margin-right: auto;
 }
 
+input.form-input {
+  margin: 8px 0;
+}
+
+.input-info {
+  font-size:0.75rem ;
+}
+
 #keyword {
   padding: 4px 6px;
 }
 
 #count {
+  width: 5em;
+  padding: 4px 6px;
+  font-size: 16px;
+}
+
+#results-status {
   font-size: 0.75rem;
 }
 
@@ -44,7 +58,7 @@ main {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin: 16px 0;
+  margin: 8px 0;
 }
 
 .results-filters {

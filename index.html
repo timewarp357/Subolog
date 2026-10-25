@@ -32,27 +32,25 @@
     <!-- <h3>ダンジョン検索</h3> -->
 
     <div>
-      <input
-        type="search"
-        id="keyword"
-        placeholder="キーワード検索"
-      >
+      <input type="number" id="count" min="1" max="100" step="1" value="20" required class="form-input">
+      <span class="input-info">&nbsp;件&nbsp;(最大表示件数)</span>
       <br>
-      <span id="count">読み込み中...</span>
+      <input type="search" id="keyword" placeholder="キーワード検索" class="form-input">
+      <br>
     </div>
-
+    
     <div class="results-toolbar">
       <div class="results-filters">
-      <label class="auto-filter">
-        <span>AUTOのみ</span>
-        <input type="checkbox" id="filter-auto" role="switch">
-        <span class="toggle-track" aria-hidden="true"></span>
-      </label>
-      <label class="auto-filter">
-        <span>日課のみ</span>
-        <input type="checkbox" id="filter-daily" role="switch">
-        <span class="toggle-track" aria-hidden="true"></span>
-      </label>
+        <label class="auto-filter">
+          <span>AUTOのみ</span>
+          <input type="checkbox" id="filter-auto" role="switch">
+          <span class="toggle-track" aria-hidden="true"></span>
+        </label>
+        <label class="auto-filter">
+          <span>日課のみ</span>
+          <input type="checkbox" id="filter-daily" role="switch">
+          <span class="toggle-track" aria-hidden="true"></span>
+        </label>
       </div>
       <div class="details-controls" role="group" aria-labelledby="details-label">
         <span id="details-label">編成</span>
@@ -60,6 +58,7 @@
         <button type="button" id="close-all">CLOSE</button>
       </div>
     </div>
+    <span id="results-status" role="status">読み込み中...</span>
 
     <div class="table-container">
       <table class="index-table">
@@ -107,6 +106,7 @@
   const keyword = document.getElementById('keyword');
   const results = document.getElementById('results');
   const count = document.getElementById('count');
+  const resultsStatus = document.getElementById('results-status');
   const filterAuto = document.getElementById('filter-auto');
   const filterDaily = document.getElementById('filter-daily');
 
@@ -127,12 +127,14 @@
 
     } catch (error) {
       console.error(error);
-      count.textContent = 'データ取得に失敗しました';
+      resultsStatus.textContent = 'データ取得に失敗しました';
     }
   }
 
   // 検索・テーブル表示
   function render() {
+    if (!count.checkValidity()) return;
+    const displayCount = count.valueAsNumber;
     const q = keyword.value.trim().toLowerCase();
 
     const matched = allData.filter(row => {
@@ -146,12 +148,10 @@
       return (!autoOnly || hasAuto) && (!dailyOnly || isDaily) && matchesKeyword;
     });
 
-    // 検索欄が空の場合は、絞り込み後の末尾15件を表示
-    const filtered = q === '' ? matched.slice(-15) : matched;
+    // 検索・絞り込み後の末尾から指定件数を表示
+    const filtered = matched.slice(-displayCount);
 
-    count.textContent = q === ''
-      ? `${filtered.length}件（最新の15件を表示）`
-      : `${filtered.length}件`;
+    resultsStatus.textContent = `${filtered.length}件表示（該当${matched.length}件）`;
 
     results.replaceChildren();
 
@@ -253,6 +253,7 @@
   });
 
   keyword.addEventListener('input', render);
+  count.addEventListener('input', render);
 
   filterAuto.addEventListener('change', () => {
     autoOnly = filterAuto.checked;
