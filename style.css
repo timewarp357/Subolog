@@ -35,8 +35,7 @@ main {
 }
 
 #count {
-  font-size: 1rem;
-  /* font-size: 0.75rem; */
+  font-size: 0.75rem;
 }
 
 .results-toolbar {
@@ -123,9 +122,9 @@ main {
   border-radius: 5px;
   /* border-radius: 999px; */
   font-size: 0.75rem;
-  padding: 5px 10px;
+  padding: 2px 4px;
   cursor: pointer;
-  width: 6em;
+  width: 5.5em;
 }
 
 .details-controls button[aria-pressed="true"] {
