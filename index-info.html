@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./style.css">
+
+  <title>monsbolog</title>
+
+</head>
+<body>
+  <header class="site-header" id="top" tabindex="-1">
+    <h3 class="site-title">
+      <a href="./index.html">monsbolog</a>
+    </h3>
+
+    <nav class="site-nav" aria-label="メインナビゲーション">
+      <ul>
+        <li><a href="./index.html" aria-current="page">編成</a></li>
+        <li><a href="./statistics.html">統計</a></li>
+        <!-- <li><a href="./dungeon.html">ダンジョン</a></li> -->
+        <li><a href="./about.html">概要</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="main-background">
+    <div class="container">
+    <h2>編成ページ解説</h2>
+
+    <a href="./index.html">「編成」ページへ戻る</a>
+
+    <hr>
+    <h3>「最大表示件数」</h3>
+    <p>
+        表示される編成の最大件数を設定します。<br>
+        表には、最近登録した編成から降順で設定した数が表示されます。<br>
+        最大表示件数は100件です。
+    </p>
+
+    <hr>
+    <h3>「OPEN」「CLOSE」ボタン</h3>
+    <p>
+      「OPEN」ボタンをクリックまたはタップですると、全ての編成を開きます<br>
+      「CLOSE」ボタンをクリックまたはタップすると、全ての編成を閉じます。
+    </p>
+
+    <hr>
+    <h3>「&#9660;」ボタン</h3>
+    <p>
+      初期状態では、最近の投稿から降順で表示されています。<br>
+      「&#9660;」ボタンをクリックまたはタップするとボタン表示が「&#9650;」に変わり、最も古い投稿から昇順で表示されます。
+    </p>
+
+    <hr>
+    <h3>「編成（配置）」列</h3>
+    <p>
+      1行目の左端に王冠マークが付いているキャラクターがリーダーです。<br>
+      リーダーをクリック/タップするとサブメンバーが表示されます。
+    </p>
+    <p>
+      キャラクター名の後ろのカッコ内は配置した位置を表します。<br>
+      上の段から1~2、最下段は左から3~4として記載しています。(※下図参照)
+    </p>
+    <div class="grid-container">
+      <div class="square"></div>
+      <div class="square">1</div>
+      <div class="square"></div>
+      <div class="square">2</div>
+      <div class="square">3</div>
+      <div class="square">4</div>
+    </div>
+
+    <hr>
+    <h3>「AUTO」列</h3>
+    <p>
+      「オートプレイ設定」の各項目を以下の数値として、ONにした数字の合計を編成の並び順に沿って左から記載しています。<br>
+      全てOFFの場合は「x」です。<br>
+      例&nbsp;>&nbsp;2番目に編成したモンスターのみ全てONにした場合、x7xx 
+      <ul>
+        <li>4……覚醒をON</li>
+        <li>2……TPスキルをON</li>
+        <li>1……AEをON</li>
+      </ul>
+    </p>
+
+    <hr>
+    <h3>「MISSION」列</h3>
+    <p>
+        MISSIONに対応した編成の場合、「詳細表示」と記載されます。<br>
+        「詳細表示」をクリック/タップすると吹き出しで満たしたミッションの条件が表示されます。
+    </p>
+
+    <hr>
+    <a href="./index.html">「編成」ページへ戻る</a>
+
+  </main>
+  <footer class="site-footer">
+    <small class="site-footer-title">monsbolog</small>
+    <a class="back-to-top" href="#top" aria-label="ページの先頭に戻る">↑ TOP</a>
+  </footer>
+</body>
+</html>
+
