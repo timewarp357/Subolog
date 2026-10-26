@@ -48,7 +48,7 @@
     
     <div class="results-toolbar">
       <div class="results-filters">
-        <span>フィルター</span>
+        <!-- <span>フィルター</span> -->
         <label class="auto-filter">
           <span>AUTO</span>
           <input type="checkbox" id="filter-auto" role="switch">
@@ -81,7 +81,7 @@
             <th>編成（配置）</th>
             <th>TURN</th>
             <th>AUTO</th>
-            <th>MISSION</th>
+            <th>備考</th>
           </tr>
         </thead>
         <tbody id="results"></tbody>
@@ -190,7 +190,7 @@
           const summary = document.createElement('summary');
           const content = document.createElement('div');
 
-          summary.textContent = '\u2654\u00a0' + formatMember(4);
+          summary.textContent = '\u265A\u00a0' + formatMember(4);
 
           [5, 6, 7].forEach(columnIndex => {
             const line = document.createElement('div');
@@ -211,7 +211,7 @@
             const tooltipButton = document.createElement('button');
             tooltipButton.type = 'button';
             tooltipButton.className = 'tooltip-trigger';
-            tooltipButton.textContent = '詳細表示';
+            tooltipButton.textContent = '詳細';
             tooltipButton.setAttribute('aria-expanded', 'false');
 
             const tooltipText = document.createElement('span');

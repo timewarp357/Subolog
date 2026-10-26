@@ -442,7 +442,7 @@ th {
     border-right: none;
     border-top: 2px solid #202020;
     color: #ffffff;
-    font-size: clamp(0.5em, 1vw, 1em);
+    font-size: clamp(0.4em, 1vw, 1em);
     padding: 3px;
     text-align: center;
     white-space: nowrap;
