@@ -18,6 +18,10 @@ h1, h2, h3 {
   margin-top: 10px;
 }
 
+hr {
+  margin-top: 2em;
+}
+
 main {
   align-items: center;
   padding: 8px 8px;

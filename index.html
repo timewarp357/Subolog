@@ -50,6 +50,11 @@
       <div class="results-filters">
         <!-- <span>フィルター</span> -->
         <label class="auto-filter">
+          <span>滅</span>
+          <input type="checkbox" id="filter-metsu" role="switch">
+          <span class="toggle-track" aria-hidden="true"></span>
+        </label>
+        <label class="auto-filter">
           <span>AUTO</span>
           <input type="checkbox" id="filter-auto" role="switch">
           <span class="toggle-track" aria-hidden="true"></span>
@@ -100,6 +105,7 @@
   const JSON_URL = './data.json';
 
   let allData = [];
+  let metsuOnly = false;
   let autoOnly = false;
   let dailyOnly = false;
   let descending = true;
@@ -119,6 +125,7 @@
   const results = document.getElementById('results');
   const count = document.getElementById('count');
   const resultsStatus = document.getElementById('results-status');
+  const filterMetsu = document.getElementById('filter-metsu');
   const filterAuto = document.getElementById('filter-auto');
   const filterDaily = document.getElementById('filter-daily');
 
@@ -151,13 +158,14 @@
 
     const matched = allData.filter(row => {
       const rowValues = Object.values(row);
+      const isMetsu = String(row['フロア'] ?? '').includes('滅');
       // Auto列は表示時と同じくJSONの9番目（0始まり）を参照
       const hasAuto = String(rowValues[10] ?? '').trim() !== '';
       const isDaily = String(row['日課'] ?? '').trim() === '〇';
       const matchesKeyword = q === '' || rowValues.some(value =>
         String(value ?? '').toLowerCase().includes(q)
       );
-      return (!autoOnly || hasAuto) && (!dailyOnly || isDaily) && matchesKeyword;
+      return (!metsuOnly || isMetsu) && (!autoOnly || hasAuto) && (!dailyOnly || isDaily) && matchesKeyword;
     });
 
     // 検索・絞り込み後の末尾から指定件数を表示
@@ -283,6 +291,11 @@
 
   keyword.addEventListener('input', render);
   count.addEventListener('input', render);
+
+  filterMetsu.addEventListener('change', () => {
+    metsuOnly = filterMetsu.checked;
+    render();
+  });
 
   filterAuto.addEventListener('change', () => {
     autoOnly = filterAuto.checked;
