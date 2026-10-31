@@ -469,6 +469,10 @@ table {
         font-size: 87.5%;
     }
 
+    input, select, textarea, #count {
+        font-size: max(16px, 1rem);
+    }
+
     .index-table-container {
         display: none;
     }
