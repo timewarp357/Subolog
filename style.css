@@ -486,6 +486,13 @@ table {
         gap: 12px;
     }
 
+    .formation-card > :nth-child(2),
+    .formation-card > :nth-child(4) {
+        background-color: #d3d3d3;
+        padding: 8px;
+        border-radius: 4px;
+    }
+
     .statistics-table {
         min-width: 18rem;
     }
@@ -512,7 +519,7 @@ table {
 
     .statistics-search #keyword {
         flex: 1 1 100%;
-        width: 100%;
+        width: 80%;
     }
 
     .statistics-targets {
