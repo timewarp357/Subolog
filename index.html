@@ -290,8 +290,9 @@
       );
       const metadata = document.createElement('div');
       metadata.className = 'formation-card-meta';
+      const turnValue = String(values[4] ?? '').trim();
       metadata.append(
-        createCardField('T', values[4]),
+        createCardField('T', turnValue ? `${turnValue}ターン` : '—'),
         createCardField('AUTO', values[5]),
         createCardField('備考', createMissionTooltip(values[6], rowIndex, 'card') ?? '—')
       );
