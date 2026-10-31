@@ -423,6 +423,10 @@ table {
 }
 
 @media screen and (max-width: 600px) {
+    html {
+        font-size: 87.5%;
+    }
+
     .statistics-table {
         min-width: 18rem;
     }
