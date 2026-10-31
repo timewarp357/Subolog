@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="./style.css">
   <!-- <link href="https://cdn.jsdelivr.net/npm/lism-css@1.1.0/dist/css/main.css" rel="stylesheet" /> -->
   
-  <title>Subolog</title>
+  <title>編成&nbsp;&#45;&nbsp;Subolog</title>
 
   <script data-goatcounter="https://timewarp.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
@@ -34,6 +34,9 @@
   <div class="container">
     
     <!-- <h3>ダンジョン検索</h3> -->
+    <p>
+      「サモンズボード」で筆者が使用した編成を記録したサイトです。
+    </p>
     <p>
       各項目の解説は<a href="./index-info.html">こちら</a>
     </p>
@@ -80,7 +83,7 @@
       </div>
     </div>
 
-    <div class="table-container">
+    <div class="table-container index-table-container">
       <table class="index-table">
         <thead>
           <tr>
@@ -96,6 +99,7 @@
         <tbody id="results"></tbody>
       </table>
     </div>
+    <ul id="card-results" class="card-results" aria-label="編成一覧"></ul>
     <p>
       <a class="back-to-top" href="#top" aria-label="ページの先頭に戻る">TOPに戻る</a>
     </p>
@@ -129,6 +133,7 @@
 
   const keyword = document.getElementById('keyword');
   const results = document.getElementById('results');
+  const cardResults = document.getElementById('card-results');
   const count = document.getElementById('count');
   const resultsStatus = document.getElementById('results-status');
   const filterMetsu = document.getElementById('filter-metsu');
@@ -156,7 +161,48 @@
     }
   }
 
-  // 検索・テーブル表示
+  function createMissionTooltip(value, rowIndex, view) {
+    if (String(value ?? '').trim() === '') return null;
+
+    const tooltip = document.createElement('span');
+    tooltip.className = 'tooltip';
+
+    const tooltipButton = document.createElement('button');
+    tooltipButton.type = 'button';
+    tooltipButton.className = 'tooltip-trigger';
+    tooltipButton.textContent = '詳細';
+    tooltipButton.setAttribute('aria-expanded', 'false');
+
+    const tooltipText = document.createElement('span');
+    tooltipText.className = 'tooltip-text';
+    tooltipText.id = `mission-tooltip-${view}-${rowIndex}`;
+    tooltipText.setAttribute('role', 'tooltip');
+    tooltipText.textContent = String(value);
+    tooltipButton.setAttribute('aria-controls', tooltipText.id);
+    tooltipButton.setAttribute('aria-describedby', tooltipText.id);
+
+    tooltip.append(tooltipButton, tooltipText);
+    return tooltip;
+  }
+
+  function createCardField(label, value, className = '') {
+    const field = document.createElement('div');
+    field.className = `formation-card-field ${className}`.trim();
+    const heading = document.createElement('span');
+    heading.className = 'formation-card-label';
+    heading.textContent = label;
+    const content = document.createElement('div');
+    content.className = 'formation-card-value';
+    if (value instanceof Node) {
+      content.appendChild(value);
+    } else {
+      content.textContent = String(value ?? '').trim() || '—';
+    }
+    field.append(heading, content);
+    return field;
+  }
+
+  // 検索・テーブルとカードの表示
   function render() {
     if (!count.checkValidity()) return;
     const displayCount = count.valueAsNumber;
@@ -181,6 +227,7 @@
     resultsStatus.textContent = `${filtered.length}件表示（${matched.length}件のうち）`;
 
     results.replaceChildren();
+    cardResults.replaceChildren();
 
     filtered.forEach((row, rowIndex) => {
       const tr = document.createElement('tr');
@@ -195,51 +242,35 @@
         return position === undefined ? String(member) : `${member} (${position})`;
       };
 
+      const createMembers = () => {
+        const details = document.createElement('details');
+        const summary = document.createElement('summary');
+        const content = document.createElement('div');
+
+        summary.textContent = '\u265A\u00a0' + formatMember(4);
+
+        [5, 6, 7].forEach(columnIndex => {
+          const line = document.createElement('div');
+          line.textContent = formatMember(columnIndex);
+          content.appendChild(line);
+        });
+
+        details.appendChild(summary);
+        details.appendChild(content);
+        return details;
+      };
+
       values.forEach((value, index) => {
         const td = document.createElement('td');
 
         // 左から4番目（番号は0始まり）
         if (index === 3) {
-          const details = document.createElement('details');
-          const summary = document.createElement('summary');
-          const content = document.createElement('div');
-
-          summary.textContent = '\u265A\u00a0' + formatMember(4);
-
-          [5, 6, 7].forEach(columnIndex => {
-            const line = document.createElement('div');
-            line.textContent = formatMember(columnIndex);
-            content.appendChild(line);
-          });
-
-          details.appendChild(summary);
-          details.appendChild(content);
-          td.appendChild(details);
+          td.appendChild(createMembers());
         } else if (index === 6) {
           // JSONのインデックス11（Mis）は、テーブルでは7列目
           // MISSIONの元の値はHTMLとして解釈せず、吹き出し内に表示
-          if (String(value ?? '').trim() !== '') {
-            const tooltip = document.createElement('span');
-            tooltip.className = 'tooltip';
-
-            const tooltipButton = document.createElement('button');
-            tooltipButton.type = 'button';
-            tooltipButton.className = 'tooltip-trigger';
-            tooltipButton.textContent = '詳細';
-            tooltipButton.setAttribute('aria-expanded', 'false');
-
-            const tooltipText = document.createElement('span');
-            tooltipText.className = 'tooltip-text';
-            tooltipText.id = `mission-tooltip-${rowIndex}`;
-            tooltipText.setAttribute('role', 'tooltip');
-            tooltipText.textContent = String(value);
-            tooltipButton.setAttribute('aria-controls', tooltipText.id);
-            tooltipButton.setAttribute('aria-describedby', tooltipText.id);
-
-            tooltip.appendChild(tooltipButton);
-            tooltip.appendChild(tooltipText);
-            td.appendChild(tooltip);
-          }
+          const tooltip = createMissionTooltip(value, rowIndex, 'table');
+          if (tooltip) td.appendChild(tooltip);
         } else {
           td.textContent = value ?? '';
         }
@@ -248,6 +279,29 @@
       });
 
       results.appendChild(tr);
+
+      const card = document.createElement('li');
+      card.className = 'formation-card';
+      const heading = document.createElement('div');
+      heading.className = 'formation-card-heading';
+      heading.append(
+        createCardField('ダンジョン', values[0]),
+        createCardField('フロア', values[1])
+      );
+      const metadata = document.createElement('div');
+      metadata.className = 'formation-card-meta';
+      metadata.append(
+        createCardField('T', values[4]),
+        createCardField('AUTO', values[5]),
+        createCardField('備考', createMissionTooltip(values[6], rowIndex, 'card') ?? '—')
+      );
+      card.append(
+        heading,
+        createCardField('ボス', values[2]),
+        createCardField('編成（配置）', createMembers()),
+        metadata
+      );
+      cardResults.appendChild(card);
     });
   }
 
@@ -268,7 +322,7 @@
   }
 
   function closeTooltips() {
-    results.querySelectorAll('.tooltip-trigger[aria-expanded="true"]').forEach(button => {
+    document.querySelectorAll('#results .tooltip-trigger[aria-expanded="true"], #card-results .tooltip-trigger[aria-expanded="true"]').forEach(button => {
       button.setAttribute('aria-expanded', 'false');
     });
   }
@@ -276,7 +330,7 @@
   // clickはタップ・マウス・キーボードのボタン操作に共通で対応
   document.addEventListener('click', event => {
     const button = event.target.closest('.tooltip-trigger');
-    if (button && results.contains(button)) {
+    if (button && (results.contains(button) || cardResults.contains(button))) {
       const wasOpen = button.getAttribute('aria-expanded') === 'true';
       closeTooltips();
       button.setAttribute('aria-expanded', String(!wasOpen));
@@ -287,7 +341,7 @@
 
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape') {
-      const button = results.querySelector('.tooltip-trigger[aria-expanded="true"]');
+      const button = document.querySelector('#results .tooltip-trigger[aria-expanded="true"], #card-results .tooltip-trigger[aria-expanded="true"]');
       if (button) {
         closeTooltips();
         button.focus();
@@ -314,13 +368,13 @@
   });
 
   document.getElementById('open-all').addEventListener('click', () => {
-    results.querySelectorAll('details').forEach(details => {
+    document.querySelectorAll('#results details, #card-results details').forEach(details => {
       details.open = true;
     });
   });
 
   document.getElementById('close-all').addEventListener('click', () => {
-    results.querySelectorAll('details').forEach(details => {
+    document.querySelectorAll('#results details, #card-results details').forEach(details => {
       details.open = false;
     });
   });

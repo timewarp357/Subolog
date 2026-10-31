@@ -292,6 +292,48 @@ table {
     width: 100%; /* 画面幅を100%に固定 */
 }
 
+.card-results {
+    display: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.formation-card {
+    display: grid;
+    gap: 8px;
+    border: 1px solid #999;
+    border-radius: 8px;
+    padding: 12px;
+    background-color: #fff;
+}
+
+.formation-card-heading {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.formation-card-field {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.formation-card-label {
+    display: block;
+    color: #444;
+    font-size: var(--md-sys-typescale-body-medium-size);
+    line-height: var(--md-sys-typescale-body-medium-line-height);
+}
+
+.formation-card-meta {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    border-top: 1px solid #ddd;
+    padding-top: 8px;
+}
+
 .statistics-table {
     max-width: 60rem;
     table-layout: fixed;
@@ -425,6 +467,15 @@ table {
 @media screen and (max-width: 600px) {
     html {
         font-size: 87.5%;
+    }
+
+    .index-table-container {
+        display: none;
+    }
+
+    .card-results {
+        display: grid;
+        gap: 12px;
     }
 
     .statistics-table {

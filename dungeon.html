@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./style.css">
+
+  <title>monsbolog</title>
+
+</head>
+<body>
+  <header class="site-header" id="top" tabindex="-1">
+    <h3 class="site-title">
+      <a href="./index.html">monsbolog</a>
+    </h3>
+
+    <nav class="site-nav" aria-label="メインナビゲーション">
+      <ul>
+        <li><a href="./index.html">編成</a></li>
+        <li><a href="./statistics.html">統計</a></li>
+        <li><a href="./dungeon.html" aria-current="page">ダンジョン</a></li>
+        <li><a href="./about.html">概要</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="main-background">
+    <div class="container">
+    <h2>ダンジョン情報</h2>
+    <div class="table-container">
+      <table class="dungeon-table">
+        <thead>
+          <tr>
+            <th>ダンジョン</th>
+            <th>フロア</th>
+            <th>ボス</th>
+            <th>ギミック</th>
+          </tr>
+        </thead>
+        <tbody id="dungeon-results"></tbody>
+      </table>
+    </div>
+
+  </div>
+  </main>
+  <footer class="site-footer">
+    <small class="site-footer-title">monsbolog</small>
+    <a class="back-to-top" href="#top" aria-label="ページの先頭に戻る">↑ TOP</a>
+  </footer>
+
+  <script>
+    async function loadJson() {
+      try {
+        // 同じ階層のJSONを取得
+        const response = await fetch('./dungeon.json');
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        // JSONをJavaScriptの配列に変換
+        const data = await response.json();
+
+        const tbody = document.getElementById('dungeon-results');
+
+        // テーブルの行を生成
+        data.forEach(item => {
+          const tr = document.createElement('tr');
+
+          ['ダンジョン', 'フロア', 'ボス', 'ギミック'].forEach(key => {
+            const td = document.createElement('td');
+            td.textContent = item[key] ?? '';
+            tr.appendChild(td);
+          });
+
+          tbody.appendChild(tr);
+        });
+
+      } catch (error) {
+        console.error('JSON取得エラー:', error);
+      }
+    }
+
+    // ページ読み込み時に実行
+    loadJson();
+  </script>
+</body>
+</html>
+
