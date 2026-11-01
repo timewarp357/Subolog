@@ -20,6 +20,8 @@
   --md-sys-typescale-body-small-line-height: 1rem;
   --md-sys-typescale-label-large-size: 0.875rem;
   --md-sys-typescale-label-large-line-height: 1.25rem;
+  --md-sys-typescale-label-medium-size: 0.75rem;
+  --md-sys-typescale-label-medium-line-height: 1rem;
 }
 
 html {
@@ -149,6 +151,15 @@ input.form-input {
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+.filter-label {
+  margin-right: 4px;
+  color: #49454f;
+  font-size: var(--md-sys-typescale-label-medium-size);
+  font-weight: 500;
+  line-height: var(--md-sys-typescale-label-medium-line-height);
+  letter-spacing: 0.5px;
 }
 
 .results-summary {

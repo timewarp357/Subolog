@@ -35,7 +35,8 @@
     
     <!-- <h3>ダンジョン検索</h3> -->
     <p>
-      「サモンズボード」で筆者が使用した編成を記録したサイトです。
+      「サモンズボード」で筆者が使用した編成を記録したサイトです。<br>
+      最近使用した編成から新しいもの順に表示しています。
     </p>
     <p>
       各項目の解説は<a href="./index-info.html">こちら</a>
@@ -44,7 +45,7 @@
     <div>
       <span class="input-info">最大表示件数&nbsp;</span>
       <input type="number" id="count" min="1" max="100" step="1" value="20" required class="form-input">
-      <span class="input-info">&nbsp;件数変更&nbsp;>&nbsp;</span>
+      <span class="input-info">&nbsp;件数変更&nbsp;&gt;&nbsp;</span>
       <button class="button-counter" type="button" onclick="setNumber(20)">20</button>
       <button class="button-counter" type="button" onclick="setNumber(50)">50</button>
       <button class="button-counter" type="button" onclick="setNumber(100)">100</button>
@@ -54,8 +55,8 @@
     </div>
     
     <div class="results-toolbar">
-      <div class="results-filters">
-        <!-- <span>FILTER&nbsp;</span> -->
+      <div class="results-filters" role="group" aria-labelledby="filter-label">
+        <span id="filter-label" class="filter-label">FILTER&nbsp;&gt;</span>
         <label class="auto-filter">
           <span>滅</span>
           <input type="checkbox" id="filter-metsu" role="switch">
