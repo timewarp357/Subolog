@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="stylesheet" href="./reset.css">
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./bulma.css">
   <!-- <link href="https://cdn.jsdelivr.net/npm/lism-css@1.1.0/dist/css/main.css" rel="stylesheet" /> -->
   
   <title>編成&nbsp;&#45;&nbsp;Subolog</title>
@@ -15,102 +15,156 @@
 </head>
 
 <body>
-  <header class="site-header" id="top" tabindex="-1">
-    <h3 class="site-title">
-      <a href="./index.html">Subolog</a>
-    </h3>
-
-    <nav class="site-nav" aria-label="メインナビゲーション">
-      <ul>
-        <li><a href="./index.html" aria-current="page">編成</a></li>
-        <li><a href="./statistics.html">統計</a></li>
-        <!-- <li><a href="./dungeon.html">ダンジョン</a></li> -->
-        <li><a href="./about.html">概要</a></li>
-      </ul>
+  <header class="">
+    <nav class="navbar has-background-grey-lighter" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <h3 class="title is-3">
+          <a class="navbar-item" href="./index.html">Subolog</a>
+        </h3>
+      </div>
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="./index.html">編成</a>
+          <a class="navbar-item" href="./statistics.html">統計</a>
+          <a class="navbar-item" href="./about.html">概要</a>
+        </div>
+      </div>
     </nav>
   </header>
 
-  <main class="main-background">
-  <div class="container">
-    
-    <!-- <h3>ダンジョン検索</h3> -->
-    <p>
-      「サモンズボード」で筆者が使用した編成を記録したサイトです。<br>
-      最近使用した編成から新しいもの順に表示しています。
-    </p>
-    <p>
-      各項目の解説は<a href="./index-info.html">こちら</a>
-    </p>
+<main>
+<div class="container">
+  <div class="section">
+    <div class="content">
 
-    <div>
-      <span class="input-info">最大表示件数&nbsp;</span>
-      <input type="number" id="count" min="1" max="100" step="1" value="20" required class="form-input">
-      <span class="input-info">&nbsp;件数変更&nbsp;&gt;&nbsp;</span>
-      <button class="button-counter" type="button" onclick="setNumber(20)">20</button>
-      <button class="button-counter" type="button" onclick="setNumber(50)">50</button>
-      <button class="button-counter" type="button" onclick="setNumber(100)">100</button>
-      <br>
-      <input type="search" id="keyword" placeholder="キーワード検索" class="form-input">
-      <br>
+      <div class="modal is-info" id="modal-window">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+          <div class="box" id="modal-value"></div>
+        </div>
+        <button class="modal-close is-large" aria-label="close" id="close-modal"></button>
+      </div>
+      
+      <!-- <h3>ダンジョン検索</h3> -->
+      <p>
+        「サモンズボード」で筆者が使用した編成を記録したサイトです。<br>
+        最近使用した編成から新しいもの順に表示しています。
+      </p>
+      <p>
+        各項目の解説は<a href="./index-info.html">こちら</a>
+      </p>
+    </div>
+
+    <div class="level">
+      <div class="level-left">
+        <div class="level-item">
+          <span class="content is-small">最大表示件数&nbsp;</span>
+        </div>
+        <div class="level-item">
+          <input class="input" type="number" id="count" min="1" max="100" step="1" value="20" required>
+        </div>
+        <div class="level-item">
+          <span class="content is-small">&nbsp;件数変更</span>
+        </div>
+        <div class="level-item">
+          <div class="field has-addons">
+            <p class="control">
+              <button class="button" type="button" onclick="setNumber(20)">20</button>
+            </p>
+            <p class="control">
+              <button class="button" type="button" onclick="setNumber(50)">50</button>
+            </p>
+            <p class="control">
+              <button class="button" type="button" onclick="setNumber(100)">100</button>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="column is-half">
+        <input type="search" id="keyword" placeholder="キーワード検索" class="input">
+      </div>
     </div>
     
-    <div class="results-toolbar">
-      <div class="results-filters" role="group" aria-labelledby="filter-label">
-        <span id="filter-label" class="filter-label">FILTER&nbsp;&gt;</span>
-        <label class="auto-filter">
-          <span>滅</span>
-          <input type="checkbox" id="filter-metsu" role="switch">
-          <span class="toggle-track" aria-hidden="true"></span>
+    <div class="content">
+      <div class="checkboxes">
+        <label class="checkbox">
+          <input type="checkbox" id="filter-metsu" role="switch" />
+          <span class="content is-small">滅</span>
         </label>
-        <label class="auto-filter">
-          <span>AUTO</span>
-          <input type="checkbox" id="filter-auto" role="switch">
-          <span class="toggle-track" aria-hidden="true"></span>
+        <label class="checkbox">
+          <input type="checkbox" id="filter-auto" role="switch" />
+          <span class="content is-small">AUTO</span>
         </label>
-        <label class="auto-filter">
-          <span>日課</span>
-          <input type="checkbox" id="filter-daily" role="switch">
-          <span class="toggle-track" aria-hidden="true"></span>
+        <label class="checkbox">
+          <input type="checkbox" id="filter-daily" role="switch" />
+          <span class="content is-small">日課</span>
         </label>
       </div>
     </div>
-    <div class="results-summary">
-      <span id="results-status" role="status">読み込み中...</span>
-      <div class="details-controls" role="group" aria-labelledby="details-label">
-        <!-- <span id="details-label">編成</span> -->
-        <button type="button" id="open-all">OPEN</button>
-        <button type="button" id="close-all">CLOSE</button>
-        <button type="button" id="toggleBtn" onclick="toggleArrow()" aria-label="昇順に切り替え" title="昇順に切り替え">&#9660;</button>
+
+    <div class="level">
+      <div class="level-left">
+        <div class="level-item">
+          <span class="content" id="results-status" role="status">読み込み中...</span>
+        </div>
+      </div>
+      <div class="level-right">
+        <div class="level-item">
+          <div class="field has-addons">
+            <p class="control">
+              <button class="button is-small" type="button" id="open-all">OPEN</button>
+            </p>
+            <p class="control">
+              <button class="button is-small" type="button" id="close-all">CLOSE</button>
+            </p>
+          </div>
+        </div>
+        <div class="level-item">
+          <button class="button is-small" type="button" id="toggleBtn" onclick="toggleArrow()" aria-label="昇順に切り替え" title="昇順に切り替え">&#9660;</button>
+        </div>
       </div>
     </div>
-
-    <div class="table-container index-table-container">
-      <table class="index-table">
-        <thead>
-          <tr>
-            <th>ダンジョン</th>
-            <th>フロア</th>
-            <th>ボス</th>
-            <th>編成（配置）</th>
-            <th>T</th>
-            <th>AUTO</th>
-            <th>備考</th>
-          </tr>
-        </thead>
-        <tbody id="results"></tbody>
-      </table>
+    <table class="table is-striped is-fullwidth">
+      <thead>
+        <tr>
+          <th class="has-text-centered">ダンジョン</th>
+          <th class="has-text-centered">フロア</th>
+          <th class="has-text-centered">ボス</th>
+          <th class="has-text-centered">編成（配置）</th>
+          <th class="has-text-centered"><abbr title="TURN">T</abbr></th>
+          <th class="has-text-centered">AUTO</th>
+          <th class="has-text-centered"><abbr title="対応したMISSION,攻略手順">&#9432;</abbr></th>
+        </tr>
+      </thead>
+      <tbody id="results"></tbody>
+      <tfoot>
+        <tr>
+          <th class="has-text-centered">ダンジョン</th>
+          <th class="has-text-centered">フロア</th>
+          <th class="has-text-centered">ボス</th>
+          <th class="has-text-centered">編成（配置）</th>
+          <th class="has-text-centered">T</th>
+          <th class="has-text-centered">AUTO</th>
+          <th class="has-text-centered"><abbr title="対応したMISSION,攻略手順">&#9432;</abbr></th>
+        </tr>
+      </tfoot>
+    </table>
+    <div class="content">
+      <a class="">TOPに戻る</a>
     </div>
-    <ul id="card-results" class="card-results" aria-label="編成一覧"></ul>
-    <p>
-      <a class="back-to-top" href="#top" aria-label="ページの先頭に戻る">TOPに戻る</a>
-    </p>
-  
   </div>
-  </main>
+</div>
+</main>
 
-  <footer class="site-footer">
-    <small class="site-footer-title">Subolog</small>
-  </footer>
+<footer class="footer has-background-grey-lighter">
+  <div class="content has-text-centered">
+    <h4 class="title is-4">
+      <a class="has-text-grey-dark" href="./index.html">Subolog</a>
+    </h4>
+  </div>
+</footer>
 
   <script>
   const JSON_URL = './data.json';
@@ -162,48 +216,7 @@
     }
   }
 
-  function createMissionTooltip(value, rowIndex, view) {
-    if (String(value ?? '').trim() === '') return null;
-
-    const tooltip = document.createElement('span');
-    tooltip.className = 'tooltip';
-
-    const tooltipButton = document.createElement('button');
-    tooltipButton.type = 'button';
-    tooltipButton.className = 'tooltip-trigger';
-    tooltipButton.textContent = '詳細';
-    tooltipButton.setAttribute('aria-expanded', 'false');
-
-    const tooltipText = document.createElement('span');
-    tooltipText.className = 'tooltip-text';
-    tooltipText.id = `mission-tooltip-${view}-${rowIndex}`;
-    tooltipText.setAttribute('role', 'tooltip');
-    tooltipText.textContent = String(value);
-    tooltipButton.setAttribute('aria-controls', tooltipText.id);
-    tooltipButton.setAttribute('aria-describedby', tooltipText.id);
-
-    tooltip.append(tooltipButton, tooltipText);
-    return tooltip;
-  }
-
-  function createCardField(label, value, className = '') {
-    const field = document.createElement('div');
-    field.className = `formation-card-field ${className}`.trim();
-    const heading = document.createElement('span');
-    heading.className = 'formation-card-label';
-    heading.textContent = label;
-    const content = document.createElement('div');
-    content.className = 'formation-card-value';
-    if (value instanceof Node) {
-      content.appendChild(value);
-    } else {
-      content.textContent = String(value ?? '').trim() || '—';
-    }
-    field.append(heading, content);
-    return field;
-  }
-
-  // 検索・テーブルとカードの表示
+  // 検索・テーブルの表示
   function render() {
     if (!count.checkValidity()) return;
     const displayCount = count.valueAsNumber;
@@ -228,7 +241,6 @@
     resultsStatus.textContent = `${filtered.length}件表示（${matched.length}件のうち）`;
 
     results.replaceChildren();
-    cardResults.replaceChildren();
 
     filtered.forEach((row, rowIndex) => {
       const tr = document.createElement('tr');
@@ -268,10 +280,15 @@
         if (index === 3) {
           td.appendChild(createMembers());
         } else if (index === 6) {
-          // JSONのインデックス11（Mis）は、テーブルでは7列目
-          // MISSIONの元の値はHTMLとして解釈せず、吹き出し内に表示
-          const tooltip = createMissionTooltip(value, rowIndex, 'table');
-          if (tooltip) td.appendChild(tooltip);
+          if (String(value ?? '').trim() !== '') {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'button is-small js-modal-trigger';
+            button.dataset.target = 'modal-window';
+            button.dataset.content = String(value);
+            button.textContent = '詳細';
+            td.appendChild(button);
+          }
         } else {
           td.textContent = value ?? '';
         }
@@ -281,29 +298,6 @@
 
       results.appendChild(tr);
 
-      const card = document.createElement('li');
-      card.className = 'formation-card';
-      const heading = document.createElement('div');
-      heading.className = 'formation-card-heading';
-      heading.append(
-        createCardField('ダンジョン', values[0]),
-        createCardField('フロア', values[1])
-      );
-      const metadata = document.createElement('div');
-      metadata.className = 'formation-card-meta';
-      const turnValue = String(values[4] ?? '').trim();
-      metadata.append(
-        createCardField('T', turnValue ? `${turnValue}ターン` : '—'),
-        createCardField('AUTO', values[5]),
-        createCardField('備考', createMissionTooltip(values[6], rowIndex, 'card') ?? '—')
-      );
-      card.append(
-        heading,
-        createCardField('ボス', values[2]),
-        createCardField('編成（配置）', createMembers()),
-        metadata
-      );
-      cardResults.appendChild(card);
     });
   }
 
@@ -378,6 +372,50 @@
   document.getElementById('close-all').addEventListener('click', () => {
     document.querySelectorAll('#results details, #card-results details').forEach(details => {
       details.open = false;
+    });
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Functions to open and close a modal
+    function openModal($el) {
+      $el.classList.add('is-active');
+    }
+
+    function closeModal($el) {
+      $el.classList.remove('is-active');
+    }
+
+    function closeAllModals() {
+      (document.querySelectorAll('.modal') || []).forEach(($modal) => {
+        closeModal($modal);
+      });
+    }
+
+    // Render後に追加されるボタンにも対応する
+    document.addEventListener('click', (event) => {
+      const $trigger = event.target.closest('.js-modal-trigger');
+      if (!$trigger) return;
+
+      const $target = document.getElementById($trigger.dataset.target);
+      if (!$target) return;
+      $target.querySelector('#modal-value').textContent = $trigger.dataset.content;
+      openModal($target);
+    });
+
+    // Add a click event on various child elements to close the parent modal
+    (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
+      const $target = $close.closest('.modal');
+
+      $close.addEventListener('click', () => {
+        closeModal($target);
+      });
+    });
+
+    // Add a keyboard event to close all modals
+    document.addEventListener('keydown', (event) => {
+      if(event.key === "Escape") {
+        closeAllModals();
+      }
     });
   });
 
