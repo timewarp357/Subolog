@@ -15,33 +15,14 @@ html {
     list-style: none;
   }
 
-  .formation-card {
-    padding: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 0.5rem;
-  }
-
-  .formation-card-heading,
-  .formation-card-meta {
-    display: grid;
-    gap: 0.75rem;
-  }
-
-  .formation-card-heading {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .formation-card-meta {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .formation-card-field {
+  #card-results .card-header > div,
+  #card-results .card-header .mr-3,
+  #card-results .card-footer-item {
     min-width: 0;
     overflow-wrap: anywhere;
   }
 
-  .formation-card-heading + .formation-card-field,
-  .formation-card-field + .formation-card-meta,
+  #card-results .card-content > div + div,
   .formation-card-note {
     margin-top: 0.75rem;
   }

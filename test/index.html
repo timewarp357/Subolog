@@ -21,8 +21,14 @@
         <h2 class="title is-2">
           <a class="navbar-item" href="./index.html">Subolog</a>
         </h2>
+        <button type="button" class="navbar-burger" aria-label="メニュー" aria-expanded="false" aria-controls="site-navbar-menu">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </button>
       </div>
-      <div class="navbar-menu">
+      <div id="site-navbar-menu" class="navbar-menu">
         <a class="navbar-item" href="./index.html" aria-current="page">編成</a>
         <a class="navbar-item" href="./statistics.html">統計</a>
         <a class="navbar-item" href="./about.html">概要</a>
@@ -199,18 +205,16 @@
 
   function createCardField(label, value, className = '') {
     const field = document.createElement('div');
-    field.className = `formation-card-field ${className}`.trim();
+    field.className = className;
     const heading = document.createElement('span');
-    heading.className = 'formation-card-label is-sr-only';
+    heading.className = 'is-sr-only';
     heading.textContent = label;
-    const content = document.createElement('div');
-    content.className = 'formation-card-value';
+    field.appendChild(heading);
     if (value instanceof Node) {
-      content.appendChild(value);
+      field.appendChild(value);
     } else {
-      content.textContent = String(value ?? '').trim() || '—';
+      field.appendChild(document.createTextNode(String(value ?? '').trim() || '—'));
     }
-    field.append(heading, content);
     return field;
   }
 
@@ -291,20 +295,31 @@
 
       results.appendChild(tr);
 
-      const card = document.createElement('li');
-      card.className = 'formation-card';
-      const heading = document.createElement('div');
-      heading.className = 'formation-card-heading';
-      heading.append(
-        createCardField('ダンジョン', values[0]),
-        createCardField('フロア', values[1])
+      const cardItem = document.createElement('li');
+      const card = document.createElement('div');
+      card.className = 'card';
+      const header = document.createElement('header');
+      header.className = 'card-header';
+      const headerItems = document.createElement('div');
+      headerItems.className = 'is-flex is-align-items-center p-3';
+      headerItems.append(
+        createCardField('ダンジョン', values[0], 'mr-3'),
+        createCardField('フロア', values[1], 'mr-3')
       );
-      const metadata = document.createElement('div');
-      metadata.className = 'formation-card-meta';
+      header.appendChild(headerItems);
+
+      const content = document.createElement('div');
+      content.className = 'card-content';
+      content.append(
+        createCardField('ボス', values[2]),
+        createCardField('編成（配置）', createMembers())
+      );
+
+      const footer = document.createElement('footer');
+      footer.className = 'card-footer';
       const turnValue = String(values[4] ?? '').trim();
       const note = String(values[6] ?? '').trim();
-      const noteField = createCardField('備考', '');
-      let noteContent;
+      let noteValue = '—';
       if (note) {
         const button = document.createElement('button');
         button.type = 'button';
@@ -312,31 +327,27 @@
         button.textContent = '詳細';
         button.setAttribute('aria-expanded', 'false');
         button.setAttribute('aria-controls', `formation-note-${rowIndex}`);
-        noteField.querySelector('.formation-card-value').replaceChildren(button);
+        noteValue = button;
 
-        noteContent = document.createElement('div');
+        const noteContent = document.createElement('div');
         noteContent.id = `formation-note-${rowIndex}`;
         noteContent.className = 'formation-card-note';
         noteContent.textContent = note;
         noteContent.hidden = true;
+        content.appendChild(noteContent);
         button.addEventListener('click', () => {
           noteContent.hidden = !noteContent.hidden;
           button.setAttribute('aria-expanded', String(!noteContent.hidden));
         });
       }
-      metadata.append(
-        createCardField('T', turnValue ? `${turnValue}ターン` : '—'),
-        createCardField('AUTO', values[5]),
-        noteField
+      footer.append(
+        createCardField('T', turnValue ? `${turnValue}ターン` : '—', 'card-footer-item'),
+        createCardField('AUTO', values[5], 'card-footer-item'),
+        createCardField('備考', noteValue, 'card-footer-item')
       );
-      card.append(
-        heading,
-        createCardField('ボス', values[2]),
-        createCardField('編成（配置）', createMembers()),
-        metadata
-      );
-      if (noteContent) card.appendChild(noteContent);
-      cardResults.appendChild(card);
+      card.append(header, content, footer);
+      cardItem.appendChild(card);
+      cardResults.appendChild(cardItem);
     });
   }
 
@@ -389,6 +400,14 @@
     document.querySelectorAll('#results details, #card-results details').forEach(details => {
       details.open = false;
     });
+  });
+
+  const navbarBurger = document.querySelector('.navbar-burger');
+  const navbarMenu = document.getElementById('site-navbar-menu');
+  navbarBurger.addEventListener('click', () => {
+    const isOpen = navbarBurger.classList.toggle('is-active');
+    navbarMenu.classList.toggle('is-active', isOpen);
+    navbarBurger.setAttribute('aria-expanded', String(isOpen));
   });
 
   loadData();
