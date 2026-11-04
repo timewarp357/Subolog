@@ -301,17 +301,19 @@
       const header = document.createElement('header');
       header.className = 'card-header';
       const headerItems = document.createElement('div');
-      headerItems.className = 'is-flex is-align-items-center p-3';
-      headerItems.append(
-        createCardField('ダンジョン', values[0], 'mr-3'),
-        createCardField('フロア', values[1], 'mr-3')
+      headerItems.className = 'card-header-items';
+      const headerFirstRow = document.createElement('div');
+      headerFirstRow.className = 'card-header-first-row is-small';
+      headerFirstRow.append(
+        createCardField('ダンジョン', values[0]),
+        createCardField('フロア', values[1])
       );
+      headerItems.append(headerFirstRow, createCardField('ボス', values[2]));
       header.appendChild(headerItems);
 
       const content = document.createElement('div');
       content.className = 'card-content';
       content.append(
-        createCardField('ボス', values[2]),
         createCardField('編成（配置）', createMembers())
       );
 

@@ -15,6 +15,24 @@ html {
     list-style: none;
   }
 
+  #card-results .card-header-items {
+    display: grid;
+    gap: 0.25rem;
+    min-width: 0;
+    padding: 0.75rem 1rem;
+  }
+
+  #card-results .card-header-first-row {
+    display: flex;
+    gap: 1rem;
+    min-width: 0;
+  }
+
+  #card-results .card-header-items > div:last-child {
+    white-space: nowrap;
+    overflow-x: auto;
+  }
+
   #card-results .card-header > div,
   #card-results .card-header .mr-3,
   #card-results .card-footer-item {
