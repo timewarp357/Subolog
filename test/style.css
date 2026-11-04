@@ -1,0 +1,38 @@
+html {
+  /* scroll-padding-top: 0px; */
+  scroll-behavior: smooth;
+}
+
+#card-results {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .formation-table {
+    display: none;
+  }
+
+  #card-results {
+    display: grid;
+    gap: 1rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .formation-card {
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+  }
+
+  .formation-card-field + .formation-card-field,
+  .formation-card-heading + .formation-card-field,
+  .formation-card-meta {
+    margin-top: 0.75rem;
+  }
+
+  .formation-card-label {
+    display: block;
+    font-size: 0.8rem;
+  }
+}
