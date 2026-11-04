@@ -8,10 +8,6 @@ html {
 }
 
 @media screen and (max-width: 768px) {
-  .formation-table {
-    display: none;
-  }
-
   #card-results {
     display: grid;
     gap: 1rem;
@@ -25,14 +21,32 @@ html {
     border-radius: 0.5rem;
   }
 
-  .formation-card-field + .formation-card-field,
-  .formation-card-heading + .formation-card-field,
+  .formation-card-heading,
   .formation-card-meta {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .formation-card-heading {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .formation-card-meta {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .formation-card-field {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .formation-card-heading + .formation-card-field,
+  .formation-card-field + .formation-card-meta,
+  .formation-card-note {
     margin-top: 0.75rem;
   }
 
-  .formation-card-label {
-    display: block;
-    font-size: 0.8rem;
+  .formation-card-note {
+    white-space: pre-wrap;
   }
 }
