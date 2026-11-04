@@ -10,6 +10,11 @@
   <link rel="stylesheet" href="./bulma.css">
   
   <title>編成&nbsp;&#45;&nbsp;Subolog</title>
+  <style>
+    table {
+      font-size: 0.875rem;
+    }
+  </style>
 
   <!-- <script data-goatcounter="https://timewarp.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script> -->
 </head>
@@ -18,9 +23,9 @@
   <header class="">
     <nav class="navbar has-shadow">
       <div class="navbar-brand">
-        <h2 class="title is-2">
+        <h3 class="title is-3">
           <a class="navbar-item" href="./index.html">Subolog</a>
-        </h2>
+        </h3>
         <button type="button" class="navbar-burger" aria-label="メニュー" aria-expanded="false" aria-controls="site-navbar-menu">
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -242,7 +247,7 @@
     const filtered = matched.slice(-displayCount);
     if (descending) filtered.reverse();
 
-    resultsStatus.textContent = `${filtered.length}件表示（${matched.length}件のうち）`;
+    resultsStatus.textContent = `${filtered.length}件（${matched.length}件）`;
 
     results.replaceChildren();
     cardResults.replaceChildren();
