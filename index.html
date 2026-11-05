@@ -7,7 +7,7 @@
 
   <link rel="stylesheet" href="./reset.css">
   <link rel="stylesheet" href="./style.css">
-  <!-- <link href="https://cdn.jsdelivr.net/npm/lism-css@1.1.0/dist/css/main.css" rel="stylesheet" /> -->
+  <link rel="icon" href="./favicon.ico" type="image/x-icon">
   
   <title>編成&nbsp;&#45;&nbsp;Subolog</title>
 
@@ -45,9 +45,9 @@
     </p>
 
     <div>
-      <span class="input-info">最大表示件数&nbsp;</span>
+      <span class="input-info">表示数</span>
       <input type="number" id="count" min="1" max="100" step="1" value="20" required class="form-input">
-      <span class="input-info">&nbsp;件数変更&nbsp;&gt;&nbsp;</span>
+      <span class="input-info">件数変更</span>
       <button class="button-counter" type="button" onclick="setNumber(20)">20</button>
       <button class="button-counter" type="button" onclick="setNumber(50)">50</button>
       <button class="button-counter" type="button" onclick="setNumber(100)">100</button>
@@ -58,7 +58,7 @@
     
     <div class="results-toolbar">
       <div class="results-filters" role="group" aria-labelledby="filter-label">
-        <span id="filter-label" class="filter-label">FILTER&nbsp;&gt;</span>
+        <span id="filter-label" class="filter-label">FILTER</span>
         <label class="auto-filter">
           <span>滅</span>
           <input type="checkbox" id="filter-metsu" role="switch">
@@ -303,11 +303,24 @@
       const metadata = document.createElement('div');
       metadata.className = 'formation-card-meta';
       const turnValue = String(values[4] ?? '').trim();
+      const missionValue = String(values[6] ?? '').trim();
+      const missionButton = document.createElement('button');
+      missionButton.type = 'button';
+      missionButton.className = 'card-details-trigger';
+      missionButton.textContent = '詳細';
+      missionButton.setAttribute('aria-expanded', 'false');
+      const missionContent = document.createElement('div');
+      missionContent.className = 'formation-card-mission';
+      missionContent.id = `mission-card-${rowIndex}`;
+      missionContent.textContent = missionValue;
+      missionContent.hidden = true;
+      missionButton.setAttribute('aria-controls', missionContent.id);
       metadata.append(
         createCardField('T', turnValue ? `${turnValue}ターン` : '—'),
         createCardField('AUTO', values[5]),
-        createCardField('備考', createMissionTooltip(values[6], rowIndex, 'card') ?? '—')
+        createCardField('備考', missionValue ? missionButton : '—')
       );
+      if (missionValue) metadata.appendChild(missionContent);
       card.append(
         heading,
         createCardField('ボス', values[2]),
@@ -350,6 +363,14 @@
     } else if (!event.target.closest('.tooltip')) {
       closeTooltips();
     }
+  });
+
+  cardResults.addEventListener('click', event => {
+    const button = event.target.closest('.card-details-trigger');
+    if (!button || !cardResults.contains(button)) return;
+    const content = document.getElementById(button.getAttribute('aria-controls'));
+    content.hidden = !content.hidden;
+    button.setAttribute('aria-expanded', String(!content.hidden));
   });
 
   document.addEventListener('keydown', event => {

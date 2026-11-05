@@ -256,7 +256,8 @@ input.form-input {
   display: inline-block;
 }
 
-.tooltip-trigger {
+.tooltip-trigger,
+.card-details-trigger {
   padding: 0;
   border: 0;
   background: transparent;
@@ -294,7 +295,8 @@ input.form-input {
   display: block;
 }
 
-.tooltip-trigger:focus-visible {
+.tooltip-trigger:focus-visible,
+.card-details-trigger:focus-visible {
   outline: 2px solid #0066cc;
   outline-offset: 3px;
 }
@@ -349,6 +351,14 @@ table {
     gap: 8px;
     border-top: 1px solid #ddd;
     padding-top: 8px;
+}
+
+.formation-card-mission {
+    grid-column: 1 / -1;
+    border-top: 1px solid #bbb;
+    padding-top: 8px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
 }
 
 .statistics-table {
