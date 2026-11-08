@@ -6,6 +6,8 @@
 
   <link rel="stylesheet" href="./reset.css">
   <link rel="stylesheet" href="./style.css">
+  <link rel="icon" type="image/x-icon" href="./favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
 
   <title>統計&nbsp;&#45;&nbsp;Subolog</title>
 
@@ -28,10 +30,10 @@
   <main class="main-background statistics-page">
     <div class="container">
     <h3>モンスター使用回数の統計</h3>
-    <p id="statistics-description">
+    <p id="statistics-description" class="medium">
         <!--キャラクター毎の使用回数の統計です。<br> -->
-        <details>
-            <summary>各列とチェックボックスの解説</summary>
+        <details class="">
+            <summary class="">各列とチェックボックスの解説</summary>
                 「編&nbsp;/&nbsp;全」列は「編成に採用された回数 / 延べ採用数」を表示します。<br>
                 延べ採用数は、複数体採用した場合に採用したキャラクターの数を集計した結果です。<br>
                 <br>
@@ -41,12 +43,12 @@
         </details>
     </p>
     <p class="statistics-search">
-      <label for="keyword">キャラクター名検索</label>
+      <label for="keyword" class="input-info">キャラクター名検索</label>
       <input type="search" id="keyword" placeholder="キャラクター名を入力" aria-controls="statistics-results" disabled>
     </p>
 
     <div class="statistics-dates" role="group" aria-labelledby="statistics-dates-label" aria-describedby="statistics-dates-help">
-      <span id="statistics-dates-label">集計期間</span>
+      <span id="statistics-dates-label" class="input-info">集計期間</span>
       <label for="start-date"><input type="date" id="start-date" aria-controls="statistics-results" disabled></label>
       <span>&ndash;</span>
       <label for="end-date"><input type="date" id="end-date" aria-controls="statistics-results" disabled></label>
@@ -58,10 +60,10 @@
     <!-- <p id="statistics-dates-help">開始日・終了日を含めて集計します。空欄の場合は、その側の日付を制限しません。</p> -->
     
     <div class="statistics-targets" role="group" aria-labelledby="statistics-targets-label">
-      <span id="statistics-targets-label">集計対象</span>
-      <label><input type="checkbox" id="include-leader" aria-controls="statistics-results" checked disabled>リーダー</label>
-      <label><input type="checkbox" id="include-sub" aria-controls="statistics-results" checked disabled>サブ</label>
-      <label><input type="checkbox" id="auto-only" aria-controls="statistics-results" disabled>AUTOのみ</label>
+      <span id="statistics-targets-label" class="input-info">集計対象</span>
+      <label class="input-info"><input type="checkbox" id="include-leader" aria-controls="statistics-results" checked disabled>リーダー</label>
+      <label class="input-info"><input type="checkbox" id="include-sub" aria-controls="statistics-results" checked disabled>サブ</label>
+      <label class="input-info"><input type="checkbox" id="auto-only" aria-controls="statistics-results" disabled>AUTOのみ</label>
     </div>
 
     <p id="statistics-status" role="status">データを読み込み中...</p>
