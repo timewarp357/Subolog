@@ -39,7 +39,8 @@
                 <br>
                 「L&nbsp;/&nbsp;Sub」列は「リーダー採用数 / サブ1〜3の延べ採用数」を表示します。<br>
                 <br>
-                「AUTOのみ」をONにすると、Auto欄に値がある編成だけを集計します。
+                「AUTOのみ」をONにすると、Auto欄に値がある編成だけを集計します。<br>
+                ダンジョンのチェックボックスをONにすると、選択したラベルで始まるフロアだけを集計します。
         </details>
     </p>
     <p class="statistics-search">
@@ -59,11 +60,21 @@
     </div>
     <!-- <p id="statistics-dates-help">開始日・終了日を含めて集計します。空欄の場合は、その側の日付を制限しません。</p> -->
     
-    <div class="statistics-targets" role="group" aria-labelledby="statistics-targets-label">
-      <span id="statistics-targets-label" class="input-info">集計対象</span>
-      <label class="input-info"><input type="checkbox" id="include-leader" aria-controls="statistics-results" checked disabled>リーダー</label>
-      <label class="input-info"><input type="checkbox" id="include-sub" aria-controls="statistics-results" checked disabled>サブ</label>
-      <label class="input-info"><input type="checkbox" id="auto-only" aria-controls="statistics-results" disabled>AUTOのみ</label>
+    <div>
+      <h4>フィルター</h4>
+      <div class="statistics-targets" role="group" aria-labelledby="statistics-targets-label">
+        <span id="statistics-targets-label" class="input-info">編成</span>
+        <label class="input-info"><input type="checkbox" id="include-leader" aria-controls="statistics-results" checked disabled>リーダー</label>
+        <label class="input-info"><input type="checkbox" id="include-sub" aria-controls="statistics-results" checked disabled>サブ</label>
+        <label class="input-info"><input type="checkbox" id="auto-only" aria-controls="statistics-results" disabled>AUTOのみ</label>
+      </div>
+      <div class="statistics-targets" role="group" aria-labelledby="statistics-dungeons-label">
+        <span id="statistics-dungeons-label" class="input-info">ダンジョン</span>
+        <label class="input-info"><input type="checkbox" id="dungeon-kami" class="dungeon-filter" value="【神】" aria-controls="statistics-results" disabled>【神】</label>
+        <label class="input-info"><input type="checkbox" id="dungeon-kamiplus" class="dungeon-filter" value="【神+】" aria-controls="statistics-results" disabled>【神&plus;】</label>
+        <label class="input-info"><input type="checkbox" id="dungeon-metsu" class="dungeon-filter" value="【滅】" aria-controls="statistics-results" disabled>【滅】</label>
+        <label class="input-info"><input type="checkbox" id="dungeon-metsuplus" class="dungeon-filter" value="【滅+】" aria-controls="statistics-results" disabled>【滅&plus;】</label>
+      </div>
     </div>
 
     <p id="statistics-status" role="status">データを読み込み中...</p>
@@ -98,6 +109,7 @@
     const includeLeader = document.getElementById('include-leader');
     const includeSub = document.getElementById('include-sub');
     const autoOnly = document.getElementById('auto-only');
+    const dungeonFilters = [...document.querySelectorAll('.dungeon-filter')];
     const startDate = document.getElementById('start-date');
     const endDate = document.getElementById('end-date');
     const clearDates = document.getElementById('clear-dates');
@@ -116,6 +128,7 @@
     includeLeader.addEventListener('change', renderStatistics);
     includeSub.addEventListener('change', renderStatistics);
     autoOnly.addEventListener('change', renderStatistics);
+    dungeonFilters.forEach(filter => filter.addEventListener('change', renderStatistics));
     startDate.addEventListener('input', renderStatistics);
     endDate.addEventListener('input', renderStatistics);
     past30Days.addEventListener('click', () => setRecentPeriod(30));
@@ -148,6 +161,7 @@
         includeLeader.disabled = false;
         includeSub.disabled = false;
         autoOnly.disabled = false;
+        dungeonFilters.forEach(filter => { filter.disabled = false; });
         startDate.disabled = false;
         endDate.disabled = false;
         clearDates.disabled = false;
@@ -173,8 +187,10 @@
           : '開始日・終了日に有効な日付を入力してください。';
         return;
       }
+      const selectedFloors = dungeonFilters.filter(filter => filter.checked).map(filter => filter.value);
       const data = allData.filter(row => {
         if (autoOnly.checked && String(row.Auto ?? '').trim() === '') return false;
+        if (selectedFloors.length && !selectedFloors.some(floor => String(row['フロア'] ?? '').trim().startsWith(floor))) return false;
         if (!start && !end) return true;
         const date = String(row['日時'] ?? '').trim().replaceAll('/', '-');
         return /^\d{4}-\d{2}-\d{2}$/.test(date)
